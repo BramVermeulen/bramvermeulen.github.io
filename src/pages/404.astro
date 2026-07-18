@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Page not found — Bram Vermeulen"
+  description="This page does not exist."
+>
+  <main
+    class="relative mx-auto flex max-w-3xl flex-col items-center gap-4 px-5 py-32 text-center"
+  >
+    <div
+      class="hero-glow pointer-events-none absolute inset-x-0 top-0 h-72"
+      aria-hidden="true"
+    >
+    </div>
+    <p
+      class="animate text-muted-foreground text-sm font-semibold tracking-widest uppercase"
+    >
+      404
+    </p>
+    <h1
+      class="animate text-3xl font-semibold tracking-tight"
+      style="animation-delay: 80ms"
+    >
+      Page not found
+    </h1>
+    <p class="animate text-muted-foreground" style="animation-delay: 160ms">
+      This page doesn't exist, or it moved.
+    </p>
+    <a href="/" class="link animate" style="animation-delay: 240ms"
+      >Back to the homepage</a
+    >
+  </main>
+</Base>

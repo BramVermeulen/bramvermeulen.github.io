@@ -1,0 +1,42 @@
+---
+interface Props {
+  name: string;
+  description: string;
+  link?: string | null;
+  tags: string[];
+}
+
+const { name, description, link, tags } = Astro.props;
+---
+
+<li
+  class="group border-border bg-card hover:border-primary/40 hover:shadow-primary/5 rounded-lg border p-5 transition duration-300 hover:-translate-y-1 hover:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+>
+  <h3 class="mb-1.5 font-medium">
+    {
+      link ? (
+        <a href={link} class="group-hover:text-primary transition-colors">
+          {name}
+          <span
+            aria-hidden="true"
+            class="inline-block transition-transform duration-300 group-hover:translate-x-1"
+          >
+            &rarr;
+          </span>
+        </a>
+      ) : (
+        name
+      )
+    }
+  </h3>
+  <p class="text-muted-foreground mb-3 text-sm">{description}</p>
+  <ul class="flex flex-wrap gap-1.5">
+    {
+      tags.map((tag) => (
+        <li class="border-border bg-muted text-muted-foreground rounded-full border px-2.5 py-0.5 text-xs">
+          {tag}
+        </li>
+      ))
+    }
+  </ul>
+</li>

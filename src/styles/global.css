@@ -1,0 +1,137 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Design tokens: HSL triplets adapted from astro-theme-pure */
+:root {
+  --primary: 200 29% 45%;
+  --foreground: 240 10% 3.9%;
+  --muted-foreground: 240 3.8% 28.1%;
+  --background: 210 33% 99%;
+  --muted: 240 4.8% 96%;
+  --card: 0 0% 100%;
+  --border: 240 5.9% 88%;
+}
+
+.dark {
+  --primary: 195 95% 85%;
+  --foreground: 0 0% 98%;
+  --muted-foreground: 240 5% 74.9%;
+  --background: 240 20.5% 5.2%;
+  --muted: 240 5.9% 13%;
+  --card: 240 6% 9%;
+  --border: 240 3.7% 22.9%;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-card: hsl(var(--card));
+  --color-border: hsl(var(--border));
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+}
+
+/* Inline text links */
+.link {
+  color: hsl(var(--foreground));
+  text-decoration-line: underline;
+  text-decoration-color: hsl(var(--border));
+  text-underline-offset: 4px;
+  transition: text-decoration-color 150ms ease;
+}
+
+.link:hover {
+  text-decoration-color: hsl(var(--primary));
+}
+
+/* Staggered entrance: pair with an inline animation-delay */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate {
+  opacity: 0;
+  animation: fade-in-up 600ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Theme toggle: show the icon for the active mode (light / dark / system) */
+.theme-icon {
+  display: none;
+}
+
+[data-theme-mode='light'] .icon-light,
+[data-theme-mode='dark'] .icon-dark,
+[data-theme-mode='system'] .icon-system,
+:root:not([data-theme-mode]) .icon-system {
+  display: block;
+}
+
+/* Sliding underline for nav links */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: -3px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 300ms ease;
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Soft glow behind the hero */
+.hero-glow {
+  background: radial-gradient(
+    40rem circle at 50% -4rem,
+    hsl(var(--primary) / 0.14),
+    transparent 60%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate {
+    animation-duration: 1ms;
+  }
+
+  .nav-link::after {
+    transition: none;
+  }
+}
