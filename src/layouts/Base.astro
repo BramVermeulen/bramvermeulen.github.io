@@ -52,6 +52,15 @@ const personSchema = {
     />
     <script is:inline>
       const media = window.matchMedia('(prefers-color-scheme: dark)');
+      // Storage can throw (private mode, in-app browsers, extensions);
+      // fall back to session-only theming instead of dying.
+      const storedTheme = () => {
+        try {
+          return localStorage.getItem('theme');
+        } catch {
+          return null;
+        }
+      };
       const applyTheme = (mode) => {
         document.documentElement.dataset.themeMode = mode;
         document.documentElement.classList.toggle(
@@ -59,9 +68,9 @@ const personSchema = {
           mode === 'dark' || (mode === 'system' && media.matches),
         );
       };
-      applyTheme(localStorage.getItem('theme') ?? 'system');
+      applyTheme(storedTheme() ?? 'system');
       media.addEventListener('change', () => {
-        if (!localStorage.getItem('theme')) applyTheme('system');
+        if (!storedTheme()) applyTheme('system');
       });
     </script>
   </head>
@@ -150,8 +159,6 @@ const personSchema = {
         const order = ['light', 'dark', 'system'];
         const current = document.documentElement.dataset.themeMode ?? 'system';
         const next = order[(order.indexOf(current) + 1) % order.length];
-        if (next === 'system') localStorage.removeItem('theme');
-        else localStorage.setItem('theme', next);
         document.documentElement.dataset.themeMode = next;
         document.documentElement.classList.toggle(
           'dark',
@@ -160,6 +167,12 @@ const personSchema = {
               window.matchMedia('(prefers-color-scheme: dark)').matches),
         );
         toggle.title = `Theme: ${next}`;
+        try {
+          if (next === 'system') localStorage.removeItem('theme');
+          else localStorage.setItem('theme', next);
+        } catch {
+          // Storage blocked: theme still applies, it just won't persist.
+        }
       });
     </script>
   </body>
