@@ -38,6 +38,20 @@ const personSchema = {
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <link rel="canonical" href={canonical} />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/eb-garamond-latin-400-normal.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/cinzel-latin-700-normal.woff2"
+      crossorigin
+    />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Bram Vermeulen" />
     <meta property="og:url" content={canonical} />
@@ -74,7 +88,7 @@ const personSchema = {
       });
     </script>
   </head>
-  <body class="bg-background text-foreground min-h-dvh font-sans antialiased">
+  <body class="bg-background text-foreground font-body min-h-dvh antialiased">
     <header
       class="border-border/60 bg-background/80 sticky top-0 z-10 border-b backdrop-blur"
     >
