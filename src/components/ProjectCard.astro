@@ -15,7 +15,10 @@ const { name, description, link, tags } = Astro.props;
   <h3 class="mb-2 text-base font-semibold tracking-wide">
     {
       link ? (
-        <a href={link} class="group-hover:text-primary transition-colors">
+        <a
+          href={link}
+          class="group-hover:text-primary transition-colors after:absolute after:inset-0"
+        >
           {name}
           <span
             aria-hidden="true"
