@@ -127,25 +127,34 @@
     U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
-/* Design tokens: HSL triplets adapted from astro-theme-pure */
+/* Design tokens: light is parchment and ink, dark is candlelit */
+
 :root {
-  --primary: 200 29% 45%;
-  --foreground: 240 10% 3.9%;
-  --muted-foreground: 240 3.8% 28.1%;
-  --background: 210 33% 99%;
-  --muted: 240 4.8% 96%;
-  --card: 0 0% 100%;
-  --border: 240 5.9% 88%;
+  --background: 40 34% 88%;
+  --foreground: 26 28% 13%;
+  --muted: 38 26% 82%;
+  --muted-foreground: 28 17% 32%;
+  --card: 40 44% 93%;
+  --border: 33 24% 66%;
+  --primary: 356 54% 36%; /* oxblood */
+  --accent: 36 54% 38%; /* brass */
+  --ember: 20 72% 42%; /* candle flame */
+  --texture-blend: multiply;
+  --texture-opacity: 0.05;
 }
 
 .dark {
-  --primary: 195 95% 85%;
-  --foreground: 0 0% 98%;
-  --muted-foreground: 240 5% 74.9%;
-  --background: 240 20.5% 5.2%;
-  --muted: 240 5.9% 13%;
-  --card: 240 6% 9%;
-  --border: 240 3.7% 22.9%;
+  --background: 26 15% 7%;
+  --foreground: 40 32% 89%;
+  --muted: 28 12% 15%;
+  --muted-foreground: 36 15% 66%;
+  --card: 26 14% 11%;
+  --border: 30 13% 24%;
+  --primary: 38 64% 58%; /* brass */
+  --accent: 356 62% 54%; /* oxblood */
+  --ember: 32 90% 60%;
+  --texture-blend: overlay;
+  --texture-opacity: 0.055;
 }
 
 html.dark {
@@ -158,6 +167,8 @@ html.dark {
   --color-muted: hsl(var(--muted));
   --color-muted-foreground: hsl(var(--muted-foreground));
   --color-primary: hsl(var(--primary));
+  --color-accent: hsl(var(--accent));
+  --color-ember: hsl(var(--ember));
   --color-card: hsl(var(--card));
   --color-border: hsl(var(--border));
 
@@ -186,14 +197,93 @@ html.dark {
     font-family: var(--font-display);
     letter-spacing: 0.01em;
   }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.28);
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 3px;
+  }
+}
+
+/* Paper grain and vignette overlays. The grain is inline SVG noise, so it
+   doesn't cost an extra request. */
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: var(--texture-opacity);
+  mix-blend-mode: var(--texture-blend);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 59;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 90% at 50% 0%,
+    transparent 45%,
+    hsl(26 20% 4% / 0.35) 100%
+  );
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.dark body::after {
+  opacity: 1;
+}
+
+/* Soft glow behind the hero */
+.hero-glow {
+  background:
+    radial-gradient(
+      42rem circle at 50% -6rem,
+      hsl(var(--primary) / 0.16),
+      transparent 62%
+    ),
+    radial-gradient(
+      22rem circle at 50% 2rem,
+      hsl(var(--ember) / 0.08),
+      transparent 70%
+    );
+}
+
+/* Framed surface for cards and chips */
+.plaque {
+  position: relative;
+  background-color: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+}
+
+/* Small angular chip used for skills and stack tags */
+.chip {
+  --chip-cut: 0.4rem;
+  clip-path: polygon(
+    var(--chip-cut) 0,
+    100% 0,
+    100% calc(100% - var(--chip-cut)),
+    calc(100% - var(--chip-cut)) 100%,
+    0 100%,
+    0 var(--chip-cut)
+  );
 }
 
 /* Inline text links */
+
 .link {
   color: hsl(var(--foreground));
   text-decoration-line: underline;
-  text-decoration-color: hsl(var(--border));
-  text-underline-offset: 4px;
+  text-decoration-color: hsl(var(--primary) / 0.45);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
   transition: text-decoration-color 150ms ease;
 }
 
@@ -215,10 +305,32 @@ html.dark {
 
 .animate {
   opacity: 0;
-  animation: fade-in-up 600ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: fade-in-up 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Flicker for the status dot */
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  40% {
+    opacity: 0.55;
+    transform: scale(0.86);
+  }
+  70% {
+    opacity: 0.9;
+    transform: scale(1.06);
+  }
+}
+
+.flicker {
+  animation: flicker 3.2s ease-in-out infinite;
 }
 
 /* Theme toggle: show the icon for the active mode (light / dark / system) */
+
 .theme-icon {
   display: none;
 }
@@ -226,22 +338,27 @@ html.dark {
 [data-theme-mode='light'] .icon-light,
 [data-theme-mode='dark'] .icon-dark,
 [data-theme-mode='system'] .icon-system,
-:root:not([data-theme-mode]) .icon-system {
+:root:not([data-theme-mode]) .icon-dark {
   display: block;
 }
 
 /* Sliding underline for nav links */
+
 .nav-link {
   position: relative;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 .nav-link::after {
   content: '';
   position: absolute;
   inset-inline: 0;
-  bottom: -3px;
+  bottom: -5px;
   height: 1px;
-  background: currentColor;
+  background: hsl(var(--primary));
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 300ms ease;
@@ -253,13 +370,50 @@ html.dark {
   transform-origin: left;
 }
 
-/* Soft glow behind the hero */
-.hero-glow {
-  background: radial-gradient(
-    40rem circle at 50% -4rem,
-    hsl(var(--primary) / 0.14),
-    transparent 60%
+/* Section heading label and rule */
+
+.rubric {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: hsl(var(--primary));
+}
+
+.rubric-rule {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    hsl(var(--border)),
+    hsl(var(--border) / 0)
   );
+}
+
+.rubric-rule::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  translate: -1px -50%;
+  rotate: 45deg;
+  background: hsl(var(--primary) / 0.7);
+}
+
+/* Drop cap. An explicit span instead of ::first-letter, so the apostrophe
+   in "I'm" stays out of the capital. */
+.dropcap {
+  font-family: var(--font-display);
+  font-weight: 700;
+  float: left;
+  font-size: 3.1rem;
+  line-height: 0.85;
+  padding-right: 0.4rem;
+  padding-top: 0.3rem;
+  color: hsl(var(--primary));
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -269,6 +423,10 @@ html.dark {
 
   .animate {
     animation-duration: 1ms;
+  }
+
+  .flicker {
+    animation: none;
   }
 
   .nav-link::after {

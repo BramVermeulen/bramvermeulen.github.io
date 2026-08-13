@@ -10,16 +10,16 @@ const { name, description, link, tags } = Astro.props;
 ---
 
 <li
-  class="group border-border bg-card hover:border-primary/40 hover:shadow-primary/5 rounded-lg border p-5 transition duration-300 hover:-translate-y-1 hover:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+  class="plaque group hover:border-primary/45 hover:shadow-primary/10 p-5 transition duration-300 hover:-translate-y-1 hover:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0"
 >
-  <h3 class="mb-1.5 font-medium">
+  <h3 class="mb-2 text-base font-semibold tracking-wide">
     {
       link ? (
         <a href={link} class="group-hover:text-primary transition-colors">
           {name}
           <span
             aria-hidden="true"
-            class="inline-block transition-transform duration-300 group-hover:translate-x-1"
+            class="text-primary/70 inline-block transition-transform duration-300 group-hover:translate-x-1"
           >
             &rarr;
           </span>
@@ -29,11 +29,13 @@ const { name, description, link, tags } = Astro.props;
       )
     }
   </h3>
-  <p class="text-muted-foreground mb-3 text-sm">{description}</p>
+  <p class="text-muted-foreground mb-4 text-[0.95rem] leading-relaxed">
+    {description}
+  </p>
   <ul class="flex flex-wrap gap-1.5">
     {
       tags.map((tag) => (
-        <li class="border-border bg-muted text-muted-foreground rounded-full border px-2.5 py-0.5 text-xs">
+        <li class="chip border-border/80 bg-muted text-muted-foreground font-display border px-2.5 py-0.5 text-[0.65rem] tracking-widest uppercase">
           {tag}
         </li>
       ))

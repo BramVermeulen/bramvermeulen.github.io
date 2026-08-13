@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Ornament from '../components/Ornament.astro';
 ---
 
 <Base
@@ -7,24 +8,21 @@ import Base from '../layouts/Base.astro';
   description="This page does not exist."
 >
   <main
-    class="relative mx-auto flex max-w-3xl flex-col items-center gap-4 px-5 py-32 text-center"
+    class="relative mx-auto flex max-w-3xl flex-col items-center gap-5 px-5 py-32 text-center"
   >
     <div
       class="hero-glow pointer-events-none absolute inset-x-0 top-0 h-72"
       aria-hidden="true"
     >
     </div>
-    <p
-      class="animate text-muted-foreground text-sm font-semibold tracking-widest uppercase"
-    >
-      404
-    </p>
+    <p class="animate rubric">CDIV &mdash; 404</p>
     <h1
-      class="animate text-3xl font-semibold tracking-tight"
+      class="animate text-2xl font-bold tracking-[0.13em] uppercase sm:text-3xl"
       style="animation-delay: 80ms"
     >
       Page not found
     </h1>
+    <Ornament class="animate w-full max-w-xs" />
     <p class="animate text-muted-foreground" style="animation-delay: 160ms">
       This page doesn't exist, or it moved.
     </p>

@@ -1,0 +1,29 @@
+---
+/** Horizontal divider with a small diamond in the middle. */
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div
+  class:list={['flex items-center justify-center gap-3', className]}
+  aria-hidden="true"
+>
+  <span
+    class="via-border h-px w-full max-w-28 bg-gradient-to-r from-transparent to-transparent"
+  ></span>
+  <svg class="text-primary/70 h-3 w-16" viewBox="0 0 64 12" fill="currentColor">
+    <path d="M32 1.5 35.5 6 32 10.5 28.5 6Z"></path>
+    <circle cx="21" cy="6" r="1.35"></circle>
+    <circle cx="43" cy="6" r="1.35"></circle>
+    <path
+      d="M0 5.6h16.5v.8H0ZM47.5 5.6H64v.8H47.5Z"
+      fill="currentColor"
+      opacity="0.5"></path>
+  </svg>
+  <span
+    class="via-border h-px w-full max-w-28 bg-gradient-to-r from-transparent to-transparent"
+  ></span>
+</div>

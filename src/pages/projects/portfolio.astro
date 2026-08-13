@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Ornament from '../../components/Ornament.astro';
 
 const stack = [
   { name: 'Astro', href: 'https://astro.build' },
@@ -21,25 +22,33 @@ const stack = [
     </div>
 
     <article class="relative flex flex-col gap-10 pt-14">
-      <header class="animate flex flex-col gap-3">
+      <header class="animate flex flex-col items-start gap-4">
         <a
           href="/#projects"
-          class="text-muted-foreground hover:text-foreground text-sm transition-colors"
+          class="text-muted-foreground hover:text-primary font-display text-[0.7rem] tracking-[0.18em] uppercase transition-colors"
         >
           &larr; Back to projects
         </a>
-        <h1 class="text-3xl font-semibold tracking-tight">This website</h1>
+        <h1 class="text-2xl font-bold tracking-[0.12em] uppercase sm:text-3xl">
+          This website
+        </h1>
+        <Ornament class="w-full max-w-sm self-start" />
       </header>
 
       <section
         class="animate flex flex-col gap-3"
         style="animation-delay: 100ms"
       >
-        <h2 class="text-xl font-medium">Project Overview</h2>
+        <h2
+          class="font-display flex items-baseline gap-3 text-lg font-semibold"
+        >
+          <span class="text-primary/70 text-sm">I</span>
+          Project Overview
+        </h2>
         <p class="text-muted-foreground">
-          This is a static portfolio site, built with the same approach I use
-          for all my projects: reproducible builds, declarative tooling, and
-          automated deployments.
+          <span class="dropcap">T</span>his is a static portfolio site, built
+          with the same approach I use for all my projects: reproducible builds,
+          declarative tooling, and automated deployments.
         </p>
       </section>
 
@@ -47,14 +56,19 @@ const stack = [
         class="animate flex flex-col gap-4"
         style="animation-delay: 180ms"
       >
-        <h2 class="text-xl font-medium">The Stack</h2>
+        <h2
+          class="font-display flex items-baseline gap-3 text-lg font-semibold"
+        >
+          <span class="text-primary/70 text-sm">II</span>
+          The Stack
+        </h2>
         <ul class="flex flex-wrap gap-1.5">
           {
             stack.map(({ name, href }) => (
               <li>
                 <a
                   href={href}
-                  class="border-border bg-muted text-muted-foreground hover:border-primary/40 hover:text-foreground block rounded-full border px-2.5 py-0.5 text-xs transition-colors"
+                  class="chip border-border/80 bg-muted text-muted-foreground hover:border-primary/50 hover:text-foreground block border px-2.5 py-1 text-xs tracking-wide transition-colors"
                 >
                   {name}
                 </a>
@@ -75,11 +89,17 @@ const stack = [
         class="animate flex flex-col gap-3"
         style="animation-delay: 260ms"
       >
-        <h2 class="text-xl font-medium">Reproducible Development</h2>
+        <h2
+          class="font-display flex items-baseline gap-3 text-lg font-semibold"
+        >
+          <span class="text-primary/70 text-sm">III</span>
+          Reproducible Development
+        </h2>
         <p class="text-muted-foreground">
           I don't keep a global Node.js installation on my machines. Instead, a
           Nix flake in the repository handles the toolchain. Running <code
-            class="bg-muted rounded px-1.5 py-0.5 text-sm">nix develop</code
+            class="bg-muted border-border/70 border px-1.5 py-0.5 font-mono text-[0.8rem]"
+            >nix develop</code
           > gives any machine the exact same environment instantly. This follows the
           same philosophy as the rest of my infrastructure: if it isn't defined in
           a text file, it doesn't exist.
@@ -90,9 +110,15 @@ const stack = [
         class="animate flex flex-col gap-3"
         style="animation-delay: 340ms"
       >
-        <h2 class="text-xl font-medium">Deployment</h2>
+        <h2
+          class="font-display flex items-baseline gap-3 text-lg font-semibold"
+        >
+          <span class="text-primary/70 text-sm">IV</span>
+          Deployment
+        </h2>
         <p class="text-muted-foreground">
-          Every push to the <code class="bg-muted rounded px-1.5 py-0.5 text-sm"
+          Every push to the <code
+            class="bg-muted border-border/70 border px-1.5 py-0.5 font-mono text-[0.8rem]"
             >main</code
           > branch triggers a GitHub Actions workflow that builds the site and publishes
           it directly to GitHub Pages. There are no servers to manage and no manual
@@ -104,7 +130,12 @@ const stack = [
         class="animate flex flex-col gap-3"
         style="animation-delay: 420ms"
       >
-        <h2 class="text-xl font-medium">Source Code</h2>
+        <h2
+          class="font-display flex items-baseline gap-3 text-lg font-semibold"
+        >
+          <span class="text-primary/70 text-sm">V</span>
+          Source Code
+        </h2>
         <p class="text-muted-foreground">
           You can explore the full source code on <a
             href="https://github.com/BramVermeulen/bramvermeulen.github.io"

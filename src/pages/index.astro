@@ -4,6 +4,7 @@ import { Image } from 'astro:assets';
 import avatar from '../assets/avatar.png';
 import Base from '../layouts/Base.astro';
 import Section from '../components/Section.astro';
+import Ornament from '../components/Ornament.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 
 const projects = [
@@ -67,8 +68,17 @@ const skills = [
       <a
         href="https://github.com/BramVermeulen"
         aria-label="Bram Vermeulen on GitHub"
-        class="border-border from-primary/20 to-primary/5 hover:border-primary/40 hover:shadow-primary/10 rounded-full border bg-gradient-to-br p-1 transition duration-300 hover:scale-105 hover:shadow-lg motion-reduce:transition-none motion-reduce:hover:scale-100"
+        class="group relative rounded-full p-1 transition duration-300 hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100"
       >
+        <span
+          class="border-primary/40 group-hover:border-primary/80 absolute inset-0 rounded-full border transition-colors"
+          aria-hidden="true"></span>
+        <span
+          class="border-border/70 absolute inset-1.5 rounded-full border transition-colors"
+          aria-hidden="true"></span>
+        <span
+          class="group-hover:shadow-primary/25 absolute inset-0 rounded-full shadow-none transition-shadow duration-300 group-hover:shadow-[0_0_2.5rem]"
+          aria-hidden="true"></span>
         <Image
           src={avatar}
           alt="Bram Vermeulen"
@@ -76,29 +86,33 @@ const skills = [
           height={192}
           loading="eager"
           fetchpriority="high"
-          class="size-24 rounded-full"
+          class="border-background relative size-24 rounded-full border-4"
         />
       </a>
-      <div>
-        <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+
+      <div class="flex flex-col items-center gap-3">
+        <h1
+          class="text-2xl font-bold tracking-[0.13em] uppercase sm:text-4xl sm:tracking-[0.16em]"
+        >
           Bram Vermeulen
         </h1>
-        <p class="text-muted-foreground mt-3 text-lg">Full-Stack Engineer</p>
+        <Ornament class="w-full max-w-xs" />
+        <p class="rubric">Full-Stack Engineer</p>
       </div>
 
       <div
-        class="text-muted-foreground flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm"
+        class="text-muted-foreground mt-1 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm"
       >
         <a
           href="https://www.google.com/maps/place/Belgium/"
-          class="hover:text-foreground flex items-center gap-1.5 transition-colors"
+          class="hover:text-primary flex items-center gap-1.5 transition-colors"
         >
           <svg
             class="size-4"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
+            stroke-width="1.7"
             stroke-linecap="round"
             stroke-linejoin="round"
             aria-hidden="true"
@@ -110,7 +124,7 @@ const skills = [
         </a>
         <a
           href="https://github.com/BramVermeulen"
-          class="hover:text-foreground flex items-center gap-1.5 transition-colors"
+          class="hover:text-primary flex items-center gap-1.5 transition-colors"
         >
           <svg
             class="size-4"
@@ -126,7 +140,7 @@ const skills = [
         </a>
         <a
           href="https://www.linkedin.com/in/vermeulen-bram/"
-          class="hover:text-foreground flex items-center gap-1.5 transition-colors"
+          class="hover:text-primary flex items-center gap-1.5 transition-colors"
         >
           <svg
             class="size-4"
@@ -143,15 +157,15 @@ const skills = [
       </div>
 
       <p
-        class="border-border bg-card flex items-center gap-x-3 rounded-full border px-4 py-2 text-sm shadow-sm transition-shadow hover:shadow-md"
+        class="chip plaque hover:border-primary/40 flex items-center gap-x-3 px-4 py-2 text-sm transition-colors"
       >
         <span class="relative flex size-2 items-center justify-center">
           <span
-            class="absolute size-2 animate-ping rounded-full bg-green-400 opacity-75 motion-reduce:hidden"
+            class="bg-ember absolute size-2.5 rounded-full opacity-40 blur-[3px]"
           ></span>
-          <span class="size-2 rounded-full bg-green-400"></span>
+          <span class="bg-ember flicker size-1.5 rounded-full"></span>
         </span>
-        <span class="text-muted-foreground font-medium">
+        <span class="text-muted-foreground">
           Currently building ERP &amp; infrastructure tooling
         </span>
       </p>
@@ -162,17 +176,16 @@ const skills = [
         <Section title="About">
           <div class="text-muted-foreground flex flex-col gap-3">
             <p>
-              I'm a Belgian full-stack developer with a Bachelor's degree in
-              Applied Computer Science. I have experience across a wide range of
-              technologies, from running Go services on Kubernetes and .NET on
-              Azure, to frontend work with Angular. These days, I primarily work
-              with Python and Odoo.
+              <span class="dropcap">I</span>'m a Belgian full-stack developer
+              with a Bachelor's degree in Applied Computer Science. I have
+              experience across a wide range of technologies, from running Go
+              services on Kubernetes and .NET on Azure, to frontend work with
+              Angular. These days, I primarily work with Python and Odoo.
             </p>
             <p>
               Right now, I'm at <a
                 href="https://www.steen-elektriciteit.be/"
-                class="text-foreground decoration-border hover:decoration-primary underline underline-offset-4 transition-colors"
-                >Steen Elektriciteit</a
+                class="link">Steen Elektriciteit</a
               >, an electrical contractor, where I connect business processes
               with software by scaling our ERP system and integrating it with
               peripheral tools.
@@ -206,14 +219,16 @@ const skills = [
 
       <div class="animate" style="animation-delay: 350ms">
         <Section title="Skills" id="skills">
-          <dl class="flex flex-col gap-3">
+          <dl class="flex flex-col gap-5">
             {
               skills.map(({ group, items }) => (
-                <div class="flex flex-col gap-1.5 sm:flex-row sm:items-baseline sm:gap-4">
-                  <dt class="w-44 shrink-0 text-sm font-medium">{group}</dt>
+                <div class="flex flex-col gap-2">
+                  <dt class="font-display text-primary/90 text-[0.7rem] font-semibold tracking-[0.18em] uppercase">
+                    {group}
+                  </dt>
                   <dd class="m-0 flex flex-wrap gap-1.5">
                     {items.map((item) => (
-                      <span class="border-border bg-muted text-muted-foreground hover:border-primary/40 hover:text-foreground rounded-full border px-2.5 py-0.5 text-xs transition-colors">
+                      <span class="chip border-border/80 bg-muted text-muted-foreground hover:border-primary/50 hover:text-foreground border px-2.5 py-1 text-xs tracking-wide transition-colors">
                         {item}
                       </span>
                     ))}
@@ -230,8 +245,7 @@ const skills = [
           <p class="text-muted-foreground">
             The best place to reach me is on <a
               href="https://www.linkedin.com/in/vermeulen-bram/"
-              class="text-foreground decoration-border hover:decoration-primary underline underline-offset-4 transition-colors"
-              >LinkedIn</a
+              class="link">LinkedIn</a
             >.
           </p>
         </Section>
