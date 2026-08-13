@@ -102,6 +102,29 @@ const personSchema = {
           href="/"
           class="group hover:text-primary flex items-center gap-2.5 transition-colors"
         >
+          <svg
+            class="text-primary size-5 shrink-0"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              d="M12 2 20 4.5 V11 C20 15.5 17 19 12 21.5 C7 19 4 15.5 4 11 V4.5 Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linejoin="round"></path>
+            {
+              /* Four windmill sails, each offset to one side of its stock
+                 as on a traditional Dutch mill */
+              [45, 135, 225, 315].map((angle) => (
+                <g transform={`rotate(${angle} 12 11)`}>
+                  <path d="M11.65 11 V9.3 H9.5 V4.9 H12.35 V11 Z" />
+                </g>
+              ))
+            }
+            <circle cx="12" cy="11" r="1.1"></circle>
+          </svg>
           <span
             class="font-display text-sm font-bold tracking-[0.14em] uppercase"
             >Bram Vermeulen</span
