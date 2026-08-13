@@ -215,6 +215,10 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
+  /* Cover the large viewport, so no unpainted strip shows at the bottom
+     while mobile browser chrome collapses during scroll. */
+  height: 100vh;
+  height: 100lvh;
   z-index: 60;
   pointer-events: none;
   opacity: var(--texture-opacity);
@@ -226,6 +230,8 @@ body::after {
   content: '';
   position: fixed;
   inset: 0;
+  height: 100vh;
+  height: 100lvh;
   z-index: 59;
   pointer-events: none;
   background: radial-gradient(
