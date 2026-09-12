@@ -77,7 +77,8 @@ const personSchema = {
           return null;
         }
       };
-      const applyTheme = (mode) => {
+      // Shared with the toggle script at the end of <body>.
+      window.applyTheme = (mode) => {
         document.documentElement.dataset.themeMode = mode;
         document.documentElement.classList.toggle(
           'dark',
@@ -85,9 +86,9 @@ const personSchema = {
         );
       };
       // Dark is the default; the toggle can still override it.
-      applyTheme(storedTheme() ?? 'dark');
+      window.applyTheme(storedTheme() ?? 'dark');
       media.addEventListener('change', () => {
-        if (storedTheme() === 'system') applyTheme('system');
+        if (storedTheme() === 'system') window.applyTheme('system');
       });
     </script>
   </head>
@@ -208,13 +209,7 @@ const personSchema = {
         const order = ['dark', 'light', 'system'];
         const current = document.documentElement.dataset.themeMode ?? 'dark';
         const next = order[(order.indexOf(current) + 1) % order.length];
-        document.documentElement.dataset.themeMode = next;
-        document.documentElement.classList.toggle(
-          'dark',
-          next === 'dark' ||
-            (next === 'system' &&
-              window.matchMedia('(prefers-color-scheme: dark)').matches),
-        );
+        window.applyTheme(next);
         toggle.title = `Theme: ${next}`;
         try {
           localStorage.setItem('theme', next);
