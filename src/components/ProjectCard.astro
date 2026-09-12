@@ -1,6 +1,6 @@
 ---
 import Chip from './Chip.astro';
-import { type TechName } from '../data/tech';
+import { techLinks, type TechName } from '../data/tech';
 
 interface Props {
   name: string;
@@ -40,13 +40,24 @@ const { name, description, link, tags } = Astro.props;
   </p>
   <ul class="flex flex-wrap gap-1.5">
     {
-      /* Deliberately not links: the whole card is one click target via the
-         title link's overlay, and clickable tags here would make a card click
-         land on a vendor site by accident. */
+      /* The title link stretches an `after:absolute after:inset-0` overlay
+         across the whole card. These tag links are siblings of that link (never
+         nested inside it, which would be invalid HTML), and `relative z-10`
+         lifts them above the overlay so they stay clickable in their own
+         right. */
       tags.map((tag) => (
-        <Chip as="li" variant="tag">
-          {tag}
-        </Chip>
+        <li>
+          <Chip
+            as="a"
+            variant="tag"
+            href={techLinks[tag]}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:border-primary/50 hover:text-foreground relative z-10 block transition-colors"
+          >
+            {tag}
+          </Chip>
+        </li>
       ))
     }
   </ul>
