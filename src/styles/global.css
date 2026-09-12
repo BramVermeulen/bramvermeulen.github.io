@@ -128,6 +128,8 @@
 /* Design tokens: light is parchment and ink, dark is candlelit */
 
 :root {
+  /* Changing --background means updating the theme-color literals in
+     src/layouts/Base.astro, which the boot script cannot read pre-paint. */
   --background: 40 34% 88%;
   --foreground: 26 28% 13%;
   --muted: 38 26% 82%;
@@ -138,9 +140,12 @@
   --ember: 20 72% 42%; /* candle flame */
   --texture-blend: multiply;
   --texture-opacity: 0.05;
+  /* The vignette only shows in dark, so one theme-invariant value suffices */
+  --vignette: 26 20% 4%;
 }
 
 .dark {
+  /* Keep in sync with the theme-color literals in src/layouts/Base.astro */
   --background: 26 15% 7%;
   --foreground: 40 32% 89%;
   --muted: 28 12% 15%;
@@ -245,7 +250,7 @@ body::after {
   background: radial-gradient(
     120% 90% at 50% 0%,
     transparent 45%,
-    hsl(26 20% 4% / 0.35) 100%
+    hsl(var(--vignette) / 0.35) 100%
   );
   opacity: 0;
   transition: opacity 300ms ease;

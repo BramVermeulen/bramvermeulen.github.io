@@ -37,7 +37,7 @@ const personSchema = {
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#14100e" />
+    <meta name="theme-color" content="#15110f" />
     <title>{title}</title>
     <link rel="canonical" href={canonical} />
     <link
@@ -77,13 +77,18 @@ const personSchema = {
           return null;
         }
       };
+      // hsl(--background) from global.css, as hex; the static <meta> above
+      // carries the dark one, since dark is server-rendered. Reading the
+      // computed value here is unreliable pre-paint, so keep these in sync
+      // with the tokens by hand.
+      const themeColor = { light: '#ebe4d6', dark: '#15110f' };
+      const themeColorMeta = document.querySelector('meta[name="theme-color"]');
       // Shared with the toggle script at the end of <body>.
       window.applyTheme = (mode) => {
+        const dark = mode === 'dark' || (mode === 'system' && media.matches);
         document.documentElement.dataset.themeMode = mode;
-        document.documentElement.classList.toggle(
-          'dark',
-          mode === 'dark' || (mode === 'system' && media.matches),
-        );
+        document.documentElement.classList.toggle('dark', dark);
+        themeColorMeta.content = dark ? themeColor.dark : themeColor.light;
       };
       // Dark is the default; the toggle can still override it.
       window.applyTheme(storedTheme() ?? 'dark');
