@@ -21,7 +21,9 @@ interface Props {
 
 const { title, description, breadcrumb, schema = true } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL('/og-image.png', Astro.site);
+// 1200x630, the landscape ratio LinkedIn and the other unfurlers want; the
+// dimensions let them reserve the slot before the file has loaded.
+const ogImage = new URL('/og-image-wide.png', Astro.site);
 
 // Same transform the homepage renders the avatar with, so both resolve to the
 // one optimized file instead of emitting a second copy for the schema.
@@ -119,7 +121,13 @@ const graph = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Bram Vermeulen - Full-Stack Engineer"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
     {
       schema && (
         <script
