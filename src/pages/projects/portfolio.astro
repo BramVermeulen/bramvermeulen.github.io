@@ -9,12 +9,13 @@ import { techLinks, type TechName } from '../../data/tech';
 const stack: TechName[] = ['Astro', 'Tailwind CSS', 'GitHub Actions', 'Nix'];
 
 // Said once, so a rename flows through the title, the heading and the
-// breadcrumb together.
-const name = 'This website';
+// breadcrumb together. The <title> adds the stack, since a search result or a
+// citation shows it stripped of every other clue about what this page is.
+const name = 'Portfolio website';
 ---
 
 <Base
-  title={`${name} - Bram Vermeulen`}
+  title={`${name} - Astro, Nix & GitHub Pages - Bram Vermeulen`}
   description="How this portfolio site is built: Astro, Tailwind CSS, a Nix dev shell and automated deploys to GitHub Pages."
   breadcrumb={name}
 >
