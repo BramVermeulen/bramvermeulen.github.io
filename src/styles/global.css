@@ -1,7 +1,5 @@
 @import 'tailwindcss';
 
-@custom-variant dark (&:where(.dark, .dark *));
-
 /* Self-hosted fonts: Cinzel for headings, EB Garamond for body text */
 
 @font-face {
@@ -137,7 +135,6 @@
   --card: 40 44% 93%;
   --border: 33 24% 66%;
   --primary: 356 54% 36%; /* oxblood */
-  --accent: 36 54% 38%; /* brass */
   --ember: 20 72% 42%; /* candle flame */
   --texture-blend: multiply;
   --texture-opacity: 0.05;
@@ -151,7 +148,6 @@
   --card: 26 14% 11%;
   --border: 30 13% 24%;
   --primary: 38 64% 58%; /* brass */
-  --accent: 356 62% 54%; /* oxblood */
   --ember: 32 90% 60%;
   --texture-blend: overlay;
   --texture-opacity: 0.055;
@@ -167,9 +163,7 @@ html.dark {
   --color-muted: hsl(var(--muted));
   --color-muted-foreground: hsl(var(--muted-foreground));
   --color-primary: hsl(var(--primary));
-  --color-accent: hsl(var(--accent));
   --color-ember: hsl(var(--ember));
-  --color-card: hsl(var(--card));
   --color-border: hsl(var(--border));
 
   --font-display: 'Cinzel', 'Trajan Pro', Georgia, 'Times New Roman', serif;
