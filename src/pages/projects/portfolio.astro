@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Ornament from '../../components/Ornament.astro';
 import Chip from '../../components/Chip.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
 
 const stack = [
   { name: 'Astro', href: 'https://astro.build' },
@@ -40,12 +41,7 @@ const stack = [
         class="animate flex flex-col gap-3"
         style="animation-delay: 100ms"
       >
-        <h2
-          class="font-display flex items-baseline gap-3 text-lg font-semibold"
-        >
-          <span class="text-primary/70 text-sm">I</span>
-          Project Overview
-        </h2>
+        <SectionHeading numeral="I" title="Project Overview" />
         <p class="text-muted-foreground">
           <span class="dropcap">T</span>his is a static portfolio site, built
           with the same approach I use for all my projects: reproducible builds,
@@ -57,12 +53,7 @@ const stack = [
         class="animate flex flex-col gap-4"
         style="animation-delay: 180ms"
       >
-        <h2
-          class="font-display flex items-baseline gap-3 text-lg font-semibold"
-        >
-          <span class="text-primary/70 text-sm">II</span>
-          The Stack
-        </h2>
+        <SectionHeading numeral="II" title="The Stack" />
         <ul class="flex flex-wrap gap-1.5">
           {
             stack.map(({ name, href }) => (
@@ -87,12 +78,7 @@ const stack = [
         class="animate flex flex-col gap-3"
         style="animation-delay: 260ms"
       >
-        <h2
-          class="font-display flex items-baseline gap-3 text-lg font-semibold"
-        >
-          <span class="text-primary/70 text-sm">III</span>
-          Reproducible Development
-        </h2>
+        <SectionHeading numeral="III" title="Reproducible Development" />
         <p class="text-muted-foreground">
           I don't keep a global Node.js installation on my machines. Instead, a
           Nix flake in the repository handles the toolchain. Running <code
@@ -108,12 +94,7 @@ const stack = [
         class="animate flex flex-col gap-3"
         style="animation-delay: 340ms"
       >
-        <h2
-          class="font-display flex items-baseline gap-3 text-lg font-semibold"
-        >
-          <span class="text-primary/70 text-sm">IV</span>
-          Deployment
-        </h2>
+        <SectionHeading numeral="IV" title="Deployment" />
         <p class="text-muted-foreground">
           Every push to the <code
             class="bg-muted border-border/70 border px-1.5 py-0.5 font-mono text-[0.8rem]"
@@ -128,12 +109,7 @@ const stack = [
         class="animate flex flex-col gap-3"
         style="animation-delay: 420ms"
       >
-        <h2
-          class="font-display flex items-baseline gap-3 text-lg font-semibold"
-        >
-          <span class="text-primary/70 text-sm">V</span>
-          Source Code
-        </h2>
+        <SectionHeading numeral="V" title="Source Code" />
         <p class="text-muted-foreground">
           You can explore the full source code on <a
             href="https://github.com/BramVermeulen/bramvermeulen.github.io"
