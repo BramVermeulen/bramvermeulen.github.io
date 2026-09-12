@@ -9,6 +9,7 @@ import ProjectCard from '../components/ProjectCard.astro';
 import Chip from '../components/Chip.astro';
 import TechLink from '../components/TechLink.astro';
 import { techLinks, type TechName } from '../data/tech';
+import { skillGroups } from '../data/skills';
 
 const projects: {
   name: string;
@@ -24,37 +25,6 @@ const projects: {
       'push. Click through for the full breakdown.',
     link: '/projects/portfolio',
     tags: ['Astro', 'Tailwind CSS', 'GitHub Actions', 'Nix'],
-  },
-];
-
-const skills: { group: string; items: TechName[] }[] = [
-  {
-    group: 'Running in production',
-    items: [
-      'Python',
-      'Odoo',
-      'PostgreSQL',
-      'TypeScript',
-      'Linux',
-      'Docker',
-      'NixOS',
-    ],
-  },
-  {
-    group: 'Battle-tested',
-    items: [
-      'Go',
-      'C#',
-      '.NET',
-      'Angular',
-      'Node.js',
-      'Kubernetes',
-      'SQL Server',
-      'MySQL',
-      'MongoDB',
-      'Prometheus',
-      'Grafana',
-    ],
   },
 ];
 ---
@@ -251,7 +221,7 @@ const skills: { group: string; items: TechName[] }[] = [
         <Section title="Skills" id="skills">
           <dl class="flex flex-col gap-5">
             {
-              skills.map(({ group, items }) => (
+              skillGroups.map(({ group, items }) => (
                 <div class="flex flex-col gap-2">
                   <dt class="font-display text-primary/90 tracking-caps-wide text-fine font-semibold uppercase">
                     {group}
