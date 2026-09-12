@@ -27,11 +27,11 @@ const stack = [
       <header class="animate flex flex-col items-start gap-4">
         <a
           href="/#projects"
-          class="text-muted-foreground hover:text-primary font-display text-[0.7rem] tracking-[0.18em] uppercase transition-colors"
+          class="text-muted-foreground hover:text-primary font-display tracking-caps-wide text-fine uppercase transition-colors"
         >
           &larr; Back to projects
         </a>
-        <h1 class="text-2xl font-bold tracking-[0.12em] uppercase sm:text-3xl">
+        <h1 class="tracking-title text-2xl font-bold uppercase sm:text-3xl">
           This website
         </h1>
         <Ornament class="w-full max-w-sm self-start" />
@@ -82,7 +82,7 @@ const stack = [
         <p class="text-muted-foreground">
           I don't keep a global Node.js installation on my machines. Instead, a
           Nix flake in the repository handles the toolchain. Running <code
-            class="bg-muted border-border/70 border px-1.5 py-0.5 font-mono text-[0.8rem]"
+            class="bg-muted border-border/70 text-code border px-1.5 py-0.5 font-mono"
             >nix develop</code
           > gives any machine the exact same environment instantly. This follows the
           same philosophy as the rest of my infrastructure: if it isn't defined in
@@ -97,7 +97,7 @@ const stack = [
         <SectionHeading numeral="IV" title="Deployment" />
         <p class="text-muted-foreground">
           Every push to the <code
-            class="bg-muted border-border/70 border px-1.5 py-0.5 font-mono text-[0.8rem]"
+            class="bg-muted border-border/70 text-code border px-1.5 py-0.5 font-mono"
             >main</code
           > branch triggers a GitHub Actions workflow that builds the site and publishes
           it directly to GitHub Pages. There are no servers to manage and no manual

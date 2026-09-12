@@ -176,6 +176,20 @@ html.dark {
   --font-body: 'EB Garamond', Garamond, Georgia, 'Times New Roman', serif;
 }
 
+@theme {
+  /* Letter-spacing for the engraved uppercase type */
+  --tracking-title: 0.13em; /* uppercase page titles */
+  --tracking-title-lg: 0.16em; /* the hero title at larger sizes */
+  --tracking-caps: 0.14em; /* small uppercase display text */
+  --tracking-caps-wide: 0.18em; /* uppercase eyebrow labels */
+
+  /* Type sizes below the default scale */
+  --text-micro: 0.65rem; /* chip tag labels */
+  --text-fine: 0.7rem; /* eyebrow labels */
+  --text-code: 0.8rem; /* inline code */
+  --text-prose: 0.95rem; /* secondary body copy */
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
