@@ -1,4 +1,6 @@
 ---
+import Chip from './Chip.astro';
+
 interface Props {
   name: string;
   description: string;
@@ -38,9 +40,9 @@ const { name, description, link, tags } = Astro.props;
   <ul class="flex flex-wrap gap-1.5">
     {
       tags.map((tag) => (
-        <li class="chip border-border/80 bg-muted text-muted-foreground font-display border px-2.5 py-0.5 text-[0.65rem] tracking-widest uppercase">
+        <Chip as="li" variant="tag">
           {tag}
-        </li>
+        </Chip>
       ))
     }
   </ul>

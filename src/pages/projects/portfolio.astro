@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Ornament from '../../components/Ornament.astro';
+import Chip from '../../components/Chip.astro';
 
 const stack = [
   { name: 'Astro', href: 'https://astro.build' },
@@ -66,12 +67,9 @@ const stack = [
           {
             stack.map(({ name, href }) => (
               <li>
-                <a
-                  href={href}
-                  class="chip border-border/80 bg-muted text-muted-foreground hover:border-primary/50 hover:text-foreground block border px-2.5 py-1 text-xs tracking-wide transition-colors"
-                >
+                <Chip as="a" href={href} class="block">
                   {name}
-                </a>
+                </Chip>
               </li>
             ))
           }

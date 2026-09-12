@@ -1,0 +1,29 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+
+type Variant = 'default' | 'tag';
+
+type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
+  variant?: Variant;
+};
+
+const {
+  as: Tag = 'span',
+  variant = 'default',
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<Tag
+  class:list={[
+    'chip border-border/80 bg-muted text-muted-foreground border px-2.5',
+    variant === 'tag'
+      ? 'font-display py-0.5 text-[0.65rem] tracking-widest uppercase'
+      : 'hover:border-primary/50 hover:text-foreground py-1 text-xs tracking-wide transition-colors',
+    className,
+  ]}
+  {...rest}
+>
+  <slot />
+</Tag>

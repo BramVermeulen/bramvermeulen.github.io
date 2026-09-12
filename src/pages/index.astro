@@ -6,6 +6,7 @@ import Base from '../layouts/Base.astro';
 import Section from '../components/Section.astro';
 import Ornament from '../components/Ornament.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import Chip from '../components/Chip.astro';
 
 const projects = [
   {
@@ -228,9 +229,7 @@ const skills = [
                   </dt>
                   <dd class="m-0 flex flex-wrap gap-1.5">
                     {items.map((item) => (
-                      <span class="chip border-border/80 bg-muted text-muted-foreground hover:border-primary/50 hover:text-foreground border px-2.5 py-1 text-xs tracking-wide transition-colors">
-                        {item}
-                      </span>
+                      <Chip>{item}</Chip>
                     ))}
                   </dd>
                 </div>
