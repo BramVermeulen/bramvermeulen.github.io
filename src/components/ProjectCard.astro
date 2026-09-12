@@ -1,11 +1,12 @@
 ---
 import Chip from './Chip.astro';
+import { type TechName } from '../data/tech';
 
 interface Props {
   name: string;
   description: string;
   link?: string | null;
-  tags: string[];
+  tags: TechName[];
 }
 
 const { name, description, link, tags } = Astro.props;
@@ -39,6 +40,9 @@ const { name, description, link, tags } = Astro.props;
   </p>
   <ul class="flex flex-wrap gap-1.5">
     {
+      /* Deliberately not links: the whole card is one click target via the
+         title link's overlay, and clickable tags here would make a card click
+         land on a vendor site by accident. */
       tags.map((tag) => (
         <Chip as="li" variant="tag">
           {tag}

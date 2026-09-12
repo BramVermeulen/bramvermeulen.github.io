@@ -3,13 +3,10 @@ import Base from '../../layouts/Base.astro';
 import Ornament from '../../components/Ornament.astro';
 import Chip from '../../components/Chip.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
+import TechLink from '../../components/TechLink.astro';
+import { techLinks, type TechName } from '../../data/tech';
 
-const stack = [
-  { name: 'Astro', href: 'https://astro.build' },
-  { name: 'Tailwind CSS', href: 'https://tailwindcss.com' },
-  { name: 'GitHub Actions', href: 'https://github.com/features/actions' },
-  { name: 'Nix', href: 'https://nixos.org' },
-];
+const stack: TechName[] = ['Astro', 'Tailwind CSS', 'GitHub Actions', 'Nix'];
 ---
 
 <Base
@@ -56,9 +53,15 @@ const stack = [
         <SectionHeading numeral="II" title="The Stack" />
         <ul class="flex flex-wrap gap-1.5">
           {
-            stack.map(({ name, href }) => (
+            stack.map((name) => (
               <li>
-                <Chip as="a" href={href} class="block">
+                <Chip
+                  as="a"
+                  href={techLinks[name]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="block"
+                >
                   {name}
                 </Chip>
               </li>
@@ -66,11 +69,12 @@ const stack = [
           }
         </ul>
         <p class="text-muted-foreground">
-          I built the site using Astro, a static-site framework that ships zero
-          JavaScript by default. In fact, the dark-mode toggle is the only
-          script running on this page. For styling, I used Tailwind CSS with the
-          color system defined as HSL design tokens, allowing both light and
-          dark themes to share a single palette definition.
+          I built the site using <TechLink name="Astro" />, a static-site
+          framework that ships zero JavaScript by default. In fact, the
+          dark-mode toggle is the only script running on this page. For styling,
+          I used <TechLink name="Tailwind CSS" /> with the color system defined as
+          HSL design tokens, allowing both light and dark themes to share a single
+          palette definition.
         </p>
       </section>
 
@@ -80,8 +84,9 @@ const stack = [
       >
         <SectionHeading numeral="III" title="Reproducible Development" />
         <p class="text-muted-foreground">
-          I don't keep a global Node.js installation on my machines. Instead, a
-          Nix flake in the repository handles the toolchain. Running <code
+          I don't keep a global <TechLink name="Node.js" /> installation on my machines.
+          Instead, a <TechLink name="Nix" /> flake in the repository handles the toolchain.
+          Running <code
             class="bg-muted border-border/70 text-code border px-1.5 py-0.5 font-mono"
             >nix develop</code
           > gives any machine the exact same environment instantly. This follows the
@@ -99,9 +104,11 @@ const stack = [
           Every push to the <code
             class="bg-muted border-border/70 text-code border px-1.5 py-0.5 font-mono"
             >main</code
-          > branch triggers a GitHub Actions workflow that builds the site and publishes
-          it directly to GitHub Pages. There are no servers to manage and no manual
-          steps involved. The repository remains the single source of truth.
+          > branch triggers a <TechLink name="GitHub Actions" /> workflow that builds
+          the site and publishes it directly to <TechLink
+            name="GitHub Pages"
+          />. There are no servers to manage and no manual steps involved. The
+          repository remains the single source of truth.
         </p>
       </section>
 
@@ -113,7 +120,9 @@ const stack = [
         <p class="text-muted-foreground">
           You can explore the full source code on <a
             href="https://github.com/BramVermeulen/bramvermeulen.github.io"
-            class="link">GitHub</a
+            class="link"
+            target="_blank"
+            rel="noopener noreferrer">GitHub</a
           >.
         </p>
       </section>

@@ -7,8 +7,15 @@ import Section from '../components/Section.astro';
 import Ornament from '../components/Ornament.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Chip from '../components/Chip.astro';
+import TechLink from '../components/TechLink.astro';
+import { techLinks, type TechName } from '../data/tech';
 
-const projects = [
+const projects: {
+  name: string;
+  description: string;
+  link: string;
+  tags: TechName[];
+}[] = [
   {
     name: 'This website',
     description:
@@ -20,7 +27,7 @@ const projects = [
   },
 ];
 
-const skills = [
+const skills: { group: string; items: TechName[] }[] = [
   {
     group: 'Running in production',
     items: [
@@ -69,6 +76,8 @@ const skills = [
       <a
         href="https://github.com/BramVermeulen"
         aria-label="Bram Vermeulen on GitHub"
+        target="_blank"
+        rel="noopener noreferrer"
         class="group relative rounded-full p-1 transition duration-300 hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100"
       >
         <span
@@ -106,6 +115,8 @@ const skills = [
       >
         <a
           href="https://www.google.com/maps/place/Belgium/"
+          target="_blank"
+          rel="noopener noreferrer"
           class="hover:text-primary flex items-center gap-1.5 transition-colors"
         >
           <svg
@@ -127,6 +138,8 @@ const skills = [
         </a>
         <a
           href="https://github.com/BramVermeulen"
+          target="_blank"
+          rel="noopener noreferrer"
           class="hover:text-primary flex items-center gap-1.5 transition-colors"
         >
           <svg
@@ -145,6 +158,8 @@ const skills = [
         </a>
         <a
           href="https://www.linkedin.com/in/vermeulen-bram/"
+          target="_blank"
+          rel="noopener noreferrer"
           class="hover:text-primary flex items-center gap-1.5 transition-colors"
         >
           <svg
@@ -185,23 +200,31 @@ const skills = [
             <p>
               <span class="dropcap">I</span>'m a Belgian full-stack developer
               with a Bachelor's degree in Applied Computer Science. I have
-              experience across a wide range of technologies, from running Go
-              services on Kubernetes and .NET on Azure, to frontend work with
-              Angular. These days, I primarily work with Python and Odoo.
+              experience across a wide range of technologies, from running <TechLink
+                name="Go"
+              /> services on <TechLink name="Kubernetes" /> and <TechLink
+                name=".NET"
+              /> on <TechLink name="Azure" />, to frontend work with <TechLink
+                name="Angular"
+              />. These days, I primarily work with <TechLink name="Python" /> and
+              <TechLink name="Odoo" />.
             </p>
             <p>
               Right now, I'm at <a
                 href="https://www.steen-elektriciteit.be/"
-                class="link">Steen Elektriciteit</a
+                class="link"
+                target="_blank"
+                rel="noopener noreferrer">Steen Elektriciteit</a
               >, an electrical contractor, where I connect business processes
               with software by scaling our ERP system and integrating it with
               peripheral tools.
             </p>
             <p>
               In my free time, I'm into infrastructure you can rebuild entirely
-              from a text file. This includes declarative NixOS machines, solid
-              monitoring with time-series storage, and writing automation that
-              removes friction rather than creating it.
+              from a text file. This includes declarative <TechLink
+                name="NixOS"
+              /> machines, solid monitoring with time-series storage, and writing
+              automation that removes friction rather than creating it.
             </p>
           </div>
         </Section>
@@ -235,7 +258,14 @@ const skills = [
                   </dt>
                   <dd class="m-0 flex flex-wrap gap-1.5">
                     {items.map((item) => (
-                      <Chip>{item}</Chip>
+                      <Chip
+                        as="a"
+                        href={techLinks[item]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {item}
+                      </Chip>
                     ))}
                   </dd>
                 </div>
@@ -250,7 +280,9 @@ const skills = [
           <p class="text-muted-foreground">
             The best place to reach me is on <a
               href="https://www.linkedin.com/in/vermeulen-bram/"
-              class="link">LinkedIn</a
+              class="link"
+              target="_blank"
+              rel="noopener noreferrer">LinkedIn</a
             >.
           </p>
         </Section>

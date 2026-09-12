@@ -1,0 +1,14 @@
+---
+import { techLinks, type TechName } from '../data/tech';
+
+interface Props {
+  /** Display name, and the key its official URL is looked up under. */
+  name: TechName;
+}
+
+const { name } = Astro.props;
+---
+
+<a href={techLinks[name]} class="link" target="_blank" rel="noopener noreferrer"
+  ><slot>{name}</slot></a
+>
