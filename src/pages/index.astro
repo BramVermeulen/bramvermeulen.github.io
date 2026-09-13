@@ -173,8 +173,8 @@ const projects: {
               <span class="dropcap">I</span>'m a Belgian full-stack developer
               with a Bachelor's degree in Applied Computer Science. I have
               experience across a wide range of technologies, from running <TechLink
-                name="Go"
-              /> services on <TechLink name="Kubernetes" /> and <TechLink
+                name="Go">Go<span class="sr-only"> language</span></TechLink
+              > services on <TechLink name="Kubernetes" /> and <TechLink
                 name=".NET"
               /> on <TechLink name="Azure" />, to frontend work with <TechLink
                 name="Angular"
@@ -237,6 +237,13 @@ const projects: {
                         rel="noopener noreferrer"
                       >
                         {item}
+                        {/* "go" sits on Lighthouse's generic-link-text
+                            blocklist, so the bare name reads as
+                            non-descriptive link text to audits and screen
+                            readers alike */}
+                        {item === 'Go' && (
+                          <span class="sr-only"> language</span>
+                        )}
                       </Chip>
                     ))}
                   </dd>
