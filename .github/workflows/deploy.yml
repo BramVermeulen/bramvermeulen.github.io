@@ -38,3 +38,26 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+      # Tell IndexNow the pages changed, instead of waiting for a crawl to
+      # notice. One ping reaches Bing, Yandex and the other participants;
+      # Bing's index is what ChatGPT and Copilot retrieve from. The key file
+      # lives in public/ and proves we own the host. Best-effort: a refused
+      # ping must never fail a deploy that already succeeded.
+      - name: Ping IndexNow
+        continue-on-error: true
+        env:
+          KEY: 284b4935a29eb2bebc3e59e945924718
+          HOST: bramvermeulen.github.io
+        run: |
+          curl -sS -m 30 -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json' \
+            -d "{
+              \"host\": \"$HOST\",
+              \"key\": \"$KEY\",
+              \"keyLocation\": \"https://$HOST/$KEY.txt\",
+              \"urlList\": [
+                \"https://$HOST/\",
+                \"https://$HOST/projects/portfolio\"
+              ]
+            }" || true
