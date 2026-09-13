@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Ornament from '../components/Ornament.astro';
 import { skillNames } from '../data/skills';
+import { profile } from '../data/profile';
 
 interface Props {
   title: string;
@@ -54,8 +55,8 @@ const built = new Date().toISOString();
 const person = {
   '@type': 'Person',
   '@id': personId,
-  name: 'Bram Vermeulen',
-  jobTitle: 'Full-Stack Engineer',
+  name: profile.name,
+  jobTitle: profile.jobTitle,
   description:
     "Belgian full-stack developer with a Bachelor's degree in Applied " +
     'Computer Science, working on ERP systems, declarative infrastructure ' +
@@ -64,10 +65,7 @@ const person = {
   // The homepage wordmark is inline svg now, so the share card is the one
   // raster of the brand left to hand the consumers that want a bitmap.
   image: ogImage.href,
-  sameAs: [
-    'https://github.com/BramVermeulen',
-    'https://www.linkedin.com/in/vermeulen-bram/',
-  ],
+  sameAs: profile.sameAs,
   nationality: {
     '@type': 'Country',
     name: 'Belgium',
@@ -79,8 +77,7 @@ const person = {
   knowsAbout: skillNames,
   worksFor: {
     '@type': 'Organization',
-    name: 'Steen Elektriciteit',
-    url: 'https://www.steen-elektriciteit.be/',
+    ...profile.employer,
   },
 };
 
@@ -95,7 +92,7 @@ const website = {
 
 // Google's ProfilePage shape: the page that *is* somebody's profile, pointing
 // at the Person it describes. Only the homepage qualifies.
-const profile = profilePage && {
+const profilePageNode = profilePage && {
   '@type': 'ProfilePage',
   '@id': canonical.href,
   url: canonical.href,
@@ -128,7 +125,7 @@ const graph = {
   '@graph': [
     person,
     website,
-    ...(profile ? [profile] : []),
+    ...(profilePageNode ? [profilePageNode] : []),
     ...(software ? [software] : []),
     ...(breadcrumbList ? [breadcrumbList] : []),
   ],

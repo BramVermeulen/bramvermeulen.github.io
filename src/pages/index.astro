@@ -8,6 +8,7 @@ import Chip from '../components/Chip.astro';
 import TechLink from '../components/TechLink.astro';
 import { techLinks, type TechName } from '../data/tech';
 import { skillGroups } from '../data/skills';
+import { profile } from '../data/profile';
 
 const projects: {
   name: string;
@@ -75,10 +76,10 @@ const projects: {
         <h1
           class="tracking-title sm:tracking-title-lg text-2xl font-bold uppercase sm:text-4xl"
         >
-          Bram Vermeulen
+          {profile.name}
         </h1>
         <Ornament class="w-full max-w-xs" />
-        <p class="rubric">Full-Stack Engineer</p>
+        <p class="rubric">{profile.jobTitle}</p>
       </div>
 
       <div
@@ -182,10 +183,10 @@ const projects: {
             </p>
             <p>
               Right now, I'm at <a
-                href="https://www.steen-elektriciteit.be/"
+                href={profile.employer.url}
                 class="link"
                 target="_blank"
-                rel="noopener noreferrer">Steen Elektriciteit</a
+                rel="noopener noreferrer">{profile.employer.name}</a
               >, an electrical contractor, where I connect business processes
               with software by scaling our ERP system and integrating it with
               peripheral tools.
