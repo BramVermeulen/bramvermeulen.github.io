@@ -12,11 +12,22 @@ interface Props {
    * label ever needs saying.
    */
   breadcrumb?: string;
+  /**
+   * Marks this page as the profile the Person node belongs to. Only the
+   * homepage is that page, so only it sets this.
+   */
+  profilePage?: boolean;
   /** Set false on pages that aren't real content, such as the 404. */
   schema?: boolean;
 }
 
-const { title, description, breadcrumb, schema = true } = Astro.props;
+const {
+  title,
+  description,
+  breadcrumb,
+  profilePage = false,
+  schema = true,
+} = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 // 1200x630, the landscape ratio LinkedIn and the other unfurlers want; the
 // dimensions let them reserve the slot before the file has loaded.
@@ -24,6 +35,10 @@ const ogImage = new URL('/og-image-wide.png', Astro.site);
 
 const personId = new URL('#person', Astro.site).href;
 const websiteId = new URL('#website', Astro.site).href;
+
+// Static site: this is evaluated once, when the site is built, so it is the
+// same honest "last changed" stamp the sitemap's <lastmod> carries.
+const built = new Date().toISOString();
 
 const person = {
   '@type': 'Person',
@@ -64,6 +79,17 @@ const website = {
   url: Astro.site,
   name: 'Bram Vermeulen',
   publisher: { '@id': personId },
+  dateModified: built,
+};
+
+// Google's ProfilePage shape: the page that *is* somebody's profile, pointing
+// at the Person it describes. Only the homepage qualifies.
+const profile = profilePage && {
+  '@type': 'ProfilePage',
+  '@id': canonical.href,
+  url: canonical.href,
+  mainEntity: { '@id': personId },
+  dateModified: built,
 };
 
 const breadcrumbList = breadcrumb && {
@@ -81,7 +107,12 @@ const breadcrumbList = breadcrumb && {
 
 const graph = {
   '@context': 'https://schema.org',
-  '@graph': [person, website, ...(breadcrumbList ? [breadcrumbList] : [])],
+  '@graph': [
+    person,
+    website,
+    ...(profile ? [profile] : []),
+    ...(breadcrumbList ? [breadcrumbList] : []),
+  ],
 };
 ---
 
