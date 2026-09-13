@@ -1,8 +1,5 @@
 ---
-import { getImage } from 'astro:assets';
-
 import '../styles/global.css';
-import avatar from '../assets/avatar.png';
 import Ornament from '../components/Ornament.astro';
 import { skillNames } from '../data/skills';
 
@@ -25,10 +22,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 // dimensions let them reserve the slot before the file has loaded.
 const ogImage = new URL('/og-image-wide.png', Astro.site);
 
-// Same transform the homepage renders the avatar with, so both resolve to the
-// one optimized file instead of emitting a second copy for the schema.
-const avatarImage = await getImage({ src: avatar, width: 192, height: 192 });
-
 const personId = new URL('#person', Astro.site).href;
 const websiteId = new URL('#website', Astro.site).href;
 
@@ -42,7 +35,9 @@ const person = {
     'Computer Science, working on ERP systems, declarative infrastructure ' +
     'and monitoring pipelines.',
   url: Astro.site,
-  image: new URL(avatarImage.src, Astro.site).href,
+  // The homepage wordmark is inline svg now, so the share card is the one
+  // raster of the brand left to hand the consumers that want a bitmap.
+  image: ogImage.href,
   sameAs: [
     'https://github.com/BramVermeulen',
     'https://www.linkedin.com/in/vermeulen-bram/',

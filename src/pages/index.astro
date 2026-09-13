@@ -1,10 +1,8 @@
 ---
-import { Image } from 'astro:assets';
-
-import avatar from '../assets/avatar.png';
 import Base from '../layouts/Base.astro';
 import Section from '../components/Section.astro';
 import Ornament from '../components/Ornament.astro';
+import Wordmark from '../components/Wordmark.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Chip from '../components/Chip.astro';
 import TechLink from '../components/TechLink.astro';
@@ -59,15 +57,17 @@ const projects: {
         <span
           class="group-hover:shadow-primary/25 absolute inset-0 rounded-full shadow-none transition-shadow duration-300 group-hover:shadow-[0_0_2.5rem]"
           aria-hidden="true"></span>
-        <Image
-          src={avatar}
-          alt="Bram Vermeulen"
-          width={192}
-          height={192}
-          loading="eager"
-          fetchpriority="high"
-          class="border-background relative size-24 rounded-full border-4"
-        />
+        {
+          /* The plaque stays ink-dark in both themes, so the wordmark reads
+             the same way the raster avatar used to; inline-flex plus a
+             clipped overflow keeps the inline metrics of the <img> it
+             replaced. */
+        }
+        <span
+          class="border-background relative inline-flex size-24 items-center justify-center overflow-hidden rounded-full border-4 bg-[hsl(26_15%_7%)] text-[hsl(40_32%_89%)]"
+        >
+          <Wordmark class="h-auto w-[4.5rem]" />
+        </span>
       </a>
 
       <div class="flex flex-col items-center gap-3">
