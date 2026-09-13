@@ -17,6 +17,16 @@ interface Props {
    * homepage is that page, so only it sets this.
    */
   profilePage?: boolean;
+  /**
+   * The code a project page is about. Given one, the page gets a
+   * SoftwareSourceCode authored by the Person; the url comes from the
+   * canonical, so only the facts the page can't derive need saying.
+   */
+  sourceCode?: {
+    name: string;
+    codeRepository: string;
+    programmingLanguage: string[];
+  };
   /** Set false on pages that aren't real content, such as the 404. */
   schema?: boolean;
 }
@@ -26,6 +36,7 @@ const {
   description,
   breadcrumb,
   profilePage = false,
+  sourceCode,
   schema = true,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -92,6 +103,13 @@ const profile = profilePage && {
   dateModified: built,
 };
 
+const software = sourceCode && {
+  '@type': 'SoftwareSourceCode',
+  ...sourceCode,
+  url: canonical.href,
+  author: { '@id': personId },
+};
+
 const breadcrumbList = breadcrumb && {
   '@type': 'BreadcrumbList',
   itemListElement: [
@@ -111,6 +129,7 @@ const graph = {
     person,
     website,
     ...(profile ? [profile] : []),
+    ...(software ? [software] : []),
     ...(breadcrumbList ? [breadcrumbList] : []),
   ],
 };

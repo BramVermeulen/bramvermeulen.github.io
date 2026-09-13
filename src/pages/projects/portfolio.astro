@@ -12,12 +12,19 @@ const stack: TechName[] = ['Astro', 'Tailwind CSS', 'GitHub Actions', 'Nix'];
 // breadcrumb together. The <title> adds the stack, since a search result or a
 // citation shows it stripped of every other clue about what this page is.
 const name = 'Portfolio website';
+
+const repository = 'https://github.com/BramVermeulen/bramvermeulen.github.io';
 ---
 
 <Base
   title={`${name} - Astro, Nix & GitHub Pages - Bram Vermeulen`}
   description="How this portfolio site is built: Astro, Tailwind CSS, a Nix dev shell and automated deploys to GitHub Pages."
   breadcrumb={name}
+  sourceCode={{
+    name,
+    codeRepository: repository,
+    programmingLanguage: ['Astro', 'TypeScript', 'CSS'],
+  }}
 >
   <main class="relative mx-auto max-w-3xl px-5 pb-24">
     <div
@@ -125,7 +132,7 @@ const name = 'Portfolio website';
         <SectionHeading numeral="V" title="Source Code" />
         <p class="text-muted-foreground">
           You can explore the full source code on <a
-            href="https://github.com/BramVermeulen/bramvermeulen.github.io"
+            href={repository}
             class="link"
             target="_blank"
             rel="noopener noreferrer">GitHub</a
