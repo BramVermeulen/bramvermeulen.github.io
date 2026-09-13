@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Ornament from '../components/Ornament.astro';
 import { skillNames } from '../data/skills';
 import { profile } from '../data/profile';
+import { built } from '../data/build';
 
 interface Props {
   title: string;
@@ -50,7 +51,6 @@ const websiteId = new URL('#website', Astro.site).href;
 
 // Static site: this is evaluated once, when the site is built, so it is the
 // same honest "last changed" stamp the sitemap's <lastmod> carries.
-const built = new Date().toISOString();
 
 const person = {
   '@type': 'Person',
