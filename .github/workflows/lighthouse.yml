@@ -1,0 +1,59 @@
+name: Lighthouse
+
+# Advisory by design. Nothing depends on this workflow, so a red run is a
+# signal to go look, never a blocked deploy. It audits the live site rather
+# than a local preview, because that is what visitors and crawlers actually
+# get: real fonts, real headers, real GitHub Pages.
+on:
+  # Right after a deploy lands on main, so a regression shows up next to the
+  # change that caused it.
+  workflow_run:
+    workflows: [Deploy to GitHub Pages]
+    types: [completed]
+    branches: [main]
+  # Weekly, to catch rot that no commit caused: Lighthouse ships new audits,
+  # and browser defaults move underneath us.
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+# Reads nothing, writes nothing, and needs no secrets: the site is public.
+permissions: {}
+
+jobs:
+  audit:
+    # A failed deploy leaves the old site up; auditing it would only report
+    # stale news. Scheduled and manual runs have no parent run to inspect.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      # Written here instead of checked out, so the job needs no repo access.
+      - name: Write the Lighthouse CI config
+        run: |
+          cat > lighthouserc.json <<'JSON'
+          {
+            "ci": {
+              "assert": {
+                "assertions": {
+                  "categories:accessibility": ["error", { "minScore": 0.95 }],
+                  "categories:seo": ["error", { "minScore": 0.95 }],
+                  "categories:best-practices": ["error", { "minScore": 0.95 }]
+                }
+              }
+            }
+          }
+          JSON
+
+      # Pinned to the commit behind release 12.6.2. Performance is deliberately
+      # not asserted: scores on a shared runner swing by more than any change
+      # this site would make. The three category scores above are stable.
+      - name: Audit the live site
+        uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # 12.6.2
+        with:
+          urls: |
+            https://bramvermeulen.github.io/
+            https://bramvermeulen.github.io/projects/portfolio/
+          # Median of three: one run is too noisy to read anything into.
+          runs: 3
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true
