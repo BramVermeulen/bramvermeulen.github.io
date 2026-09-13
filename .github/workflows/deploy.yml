@@ -30,6 +30,14 @@ jobs:
       - uses: actions/checkout@v7
       - uses: withastro/action@v6
 
+      # Assert against the very dist/ the action just built and uploaded, so
+      # the artifact that would be published is the one under test. The deploy
+      # job needs this job, so a violation here stops the release: the artifact
+      # is uploaded but deploy-pages never runs, and the live site stays put.
+      # Standard library python only - nothing to install on the runner.
+      - name: Check the built site
+        run: python3 scripts/check-build.py dist
+
   deploy:
     needs: [check, build]
     runs-on: ubuntu-latest
